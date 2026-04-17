@@ -26,7 +26,7 @@ class DashboardController extends Controller
         // Les commandes où l'utilisateur est le prestataire
         // Comme on a ajouté le prestataire_id dans Orders, on peut utiliser ordersAsPrestataire
         $allOrders = $user->ordersAsPrestataire()
-            ->with(['client', 'neighborhood', 'prestation'])
+            ->with(['client', 'prestation'])
             ->latest()
             ->get();
 

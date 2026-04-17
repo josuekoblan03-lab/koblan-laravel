@@ -127,7 +127,7 @@ $isValidated = $user->is_verified ?? false;
                 {{ \Str::limit($cmd->prestation->title ?? 'Service', 30) }}
               </div>
               <div style="font-size:0.8rem;color:#aaa;">
-                Par {{ $cmd->client->name ?? '—' }} — <strong style="color:#FFD700;">{{ number_format($cmd->total_amount ?? 0, 0, ',', ' ') }} FCFA</strong>
+                Par {{ $cmd->client->name ?? '—' }} — <strong style="color:#FFD700;">{{ number_format($cmd->amount ?? 0, 0, ',', ' ') }} FCFA</strong>
               </div>
             </div>
             <div style="display:flex;gap:0.5rem;">
@@ -207,7 +207,7 @@ $isValidated = $user->is_verified ?? false;
               <div style="font-size:0.75rem;color:#666;">Client: {{ $cmd->client->name ?? '—' }}</div>
             </div>
             <div style="text-align:right;">
-              <div style="color:#FFD700;font-weight:700;font-size:0.95rem;margin-bottom:0.25rem;">{{ number_format($cmd->total_amount ?? 0, 0, ',', ' ') }} FCFA</div>
+              <div style="color:#FFD700;font-weight:700;font-size:0.95rem;margin-bottom:0.25rem;">{{ number_format($cmd->amount ?? 0, 0, ',', ' ') }} FCFA</div>
               <div style="font-size:0.7rem;color:{{ $col }};text-transform:uppercase;font-weight:700;">{{ $labels[$cmd->status] ?? $cmd->status }}</div>
             </div>
           </div>

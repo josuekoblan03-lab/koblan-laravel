@@ -42,7 +42,10 @@ class ServiceController extends Controller
             'medias.*' => 'nullable|file|mimes:jpeg,png,jpg,gif,mp4|max:10240'
         ]);
 
-        $prestation = tap(new Prestation($request->only('title', 'description', 'price', 'service_type_id')), function($p) {
+        $data = $request->only('title', 'price', 'service_type_id');
+        $data['description'] = $request->input('description') ?? ''; // NOT NULL in DB
+
+        $prestation = tap(new Prestation($data), function($p) {
             $p->user_id = Auth::id();
             $p->status = 'pending'; // Requires admin approval
             $p->save();
@@ -56,8 +59,8 @@ class ServiceController extends Controller
                     
                     Media::create([
                         'prestation_id' => $prestation->id,
-                        'media_url' => $path,
-                        'media_type' => $isImage ? 'image' : 'video',
+                        'url' => $path,
+                        'type' => $isImage ? 'image' : 'video',
                         'is_main' => $index === 0,
                         'order' => $index
                     ]);
@@ -108,8 +111,8 @@ class ServiceController extends Controller
                     
                     Media::create([
                         'prestation_id' => $service->id,
-                        'media_url' => $path,
-                        'media_type' => $isImage ? 'image' : 'video',
+                        'url' => $path,
+                        'type' => $isImage ? 'image' : 'video',
                         'is_main' => false,
                         'order' => $maxOrder + $index + 1
                     ]);
@@ -127,7 +130,7 @@ class ServiceController extends Controller
         }
 
         foreach($service->medias as $media) {
-            Storage::disk('public')->delete($media->media_url);
+            Storage::disk('public')->delete($media->url);
             $media->delete();
         }
 

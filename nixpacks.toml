@@ -1,8 +1,8 @@
 [phases.setup]
-nixPkgs = ["php82", "php82Extensions.pdo", "php82Extensions.pdo_mysql", "php82Extensions.mbstring", "php82Extensions.bcmath", "php82Extensions.gd", "php82Extensions.xml", "php82Extensions.zip", "php82Extensions.curl", "composer", "bash"]
+nixPkgs = ["php82", "php82Extensions.pdo", "php82Extensions.pdo_mysql", "php82Extensions.mbstring", "php82Extensions.bcmath", "php82Extensions.gd", "php82Extensions.xml", "php82Extensions.zip", "php82Extensions.curl", "composer"]
 
 [phases.install]
-cmds = ["composer install --no-dev --optimize-autoloader", "chmod +x railway_start.sh"]
+cmds = ["composer install --no-dev --optimize-autoloader"]
 
 [start]
-cmd = "bash railway_start.sh"
+cmd = "php artisan storage:link --force; php artisan migrate --force; php artisan config:cache; php artisan route:cache; php artisan serve --host=0.0.0.0 --port=$PORT"

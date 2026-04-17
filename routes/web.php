@@ -49,9 +49,9 @@ Route::get('/faq', function () {
 // Auth
 Route::middleware('guest')->group(function () {
     Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
-    Route::post('/login', [AuthController::class, 'login']);
+    Route::post('/login', [AuthController::class, 'login'])->name('login.submit');
     Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
-    Route::post('/register', [AuthController::class, 'register']);
+    Route::post('/register', [AuthController::class, 'register'])->name('client.register.submit');
     Route::get('/register/prestataire', [AuthController::class, 'showRegisterPrestataire'])->name('register.prestataire');
     Route::post('/register/prestataire', [AuthController::class, 'registerPrestataire']);
 });

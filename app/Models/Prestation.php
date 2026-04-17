@@ -74,13 +74,27 @@ class Prestation extends Model
     {
         // 1. Image uploadée directement
         if ($this->image) {
-            return asset('storage/' . $this->image);
+            // URL externe (Cloudinary etc.)
+            if (str_starts_with($this->image, 'http')) {
+                return $this->image;
+            }
+            // Fichier local — vérifie qu'il existe encore
+            if (\Illuminate\Support\Facades\Storage::disk('public')->exists($this->image)) {
+                return asset('storage/' . $this->image);
+            }
         }
 
         // 2. Media principal
         $main = $this->mainMedia;
-        if ($main) {
-            return asset('storage/' . $main->url);
+        if ($main && $main->url) {
+            // URL externe (Cloudinary etc.)
+            if (str_starts_with($main->url, 'http')) {
+                return $main->url;
+            }
+            // Fichier local — vérifie qu'il existe encore
+            if (\Illuminate\Support\Facades\Storage::disk('public')->exists($main->url)) {
+                return asset('storage/' . $main->url);
+            }
         }
 
         // 3. Recherche dans public/images/services/

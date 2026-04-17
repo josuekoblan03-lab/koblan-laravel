@@ -57,7 +57,7 @@
     <a href="{{ url('/contact') }}">Contact</a>
   </nav>
   @guest
-  <div style="display:flex;gap:1rem;margin-top:2rem;position:relative;z-index:2;">
+  <div class="mobile-nav-actions-container" style="margin-top:2rem;position:relative;z-index:2;">
     <a href="{{ route('login') }}" class="btn btn-outline-gold">Connexion</a>
     <a href="{{ route('register') }}" class="btn btn-gold">S'inscrire</a>
   </div>
@@ -213,6 +213,30 @@
     .hide-on-mobile {
       display: none !important;
     }
+  }
+
+  /* MOBILE NAV OVERLAY FIXES */
+  .mobile-nav nav a {
+      font-size: clamp(1.5rem, 6vw, 2.5rem) !important;
+  }
+  .mobile-nav .btn {
+      font-size: 1rem !important;
+      font-family: var(--font-body) !important;
+      font-weight: 600 !important;
+      padding: 0.8rem 1.2rem !important;
+      white-space: nowrap;
+      flex: 1;
+      text-align: center;
+      justify-content: center;
+  }
+  .mobile-nav-actions-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      width: 100%;
+      max-width: 400px;
+      padding: 0 2rem;
+      justify-content: center;
   }
 </style>
 

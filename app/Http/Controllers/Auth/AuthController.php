@@ -42,7 +42,7 @@ class AuthController extends Controller
 
     public function showRegister()
     {
-        $cities = City::orderBy('name')->get();
+        $cities = City::with('neighborhoods')->orderBy('name')->get();
         return view('auth.register', [
             'title' => 'Inscription - KOBLAN',
             'cities' => $cities
@@ -51,7 +51,7 @@ class AuthController extends Controller
 
     public function showRegisterPrestataire()
     {
-        $cities = City::orderBy('name')->get();
+        $cities = City::with('neighborhoods')->orderBy('name')->get();
         return view('auth.register_prestataire', [
             'title' => 'Devenir Prestataire - KOBLAN',
             'cities' => $cities
@@ -60,7 +60,9 @@ class AuthController extends Controller
 
     public function register(Request $request)
     {
-        return $this->processRegister($request, 'client');
+        // If the form sends role_principal (unified form), use it, otherwise default to client
+        $role = $request->input('role_principal', 'client');
+        return $this->processRegister($request, $role);
     }
 
     public function registerPrestataire(Request $request)
@@ -70,14 +72,28 @@ class AuthController extends Controller
 
     private function processRegister(Request $request, string $role)
     {
-        $request->validate([
-            'name' => ['required', 'string', 'max:255'],
+        $rules = [
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
             'phone' => ['required', 'string', 'max:20'],
             'city_id' => ['required', 'exists:cities,id'],
-            'photo' => ['nullable', 'image', 'max:2048']
-        ]);
+            'neighborhood_id' => ['nullable', 'exists:neighborhoods,id'],
+            'photo' => ['nullable', 'image', 'max:2048'],
+            // Add fallback for single 'name' field if they use a different form
+            'name' => ['nullable', 'string', 'max:255'], 
+            'nom' => ['nullable', 'string', 'max:255'],
+            'prenom' => ['nullable', 'string', 'max:255'],
+        ];
+
+        $request->validate($rules);
+
+        // Determine full name
+        $fullName = '';
+        if ($request->filled('nom') || $request->filled('prenom')) {
+            $fullName = trim(($request->nom ?? '') . ' ' . ($request->prenom ?? ''));
+        } else {
+            $fullName = $request->name ?? 'Anonyme';
+        }
 
         $photoPath = null;
         if ($request->hasFile('photo')) {
@@ -85,12 +101,13 @@ class AuthController extends Controller
         }
 
         $user = User::create([
-            'name' => $request->name,
+            'name' => $fullName,
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'role' => $role,
             'phone' => $request->phone,
             'city_id' => $request->city_id,
+            'neighborhood_id' => $request->neighborhood_id,
             'avatar' => $photoPath,
             'is_verified' => $role === 'client' ? true : false,
             'is_active' => true,

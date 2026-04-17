@@ -90,7 +90,7 @@ $totalSlides = $medias->count() > 0 ? $medias->count() : 1;
   .price-card:hover { transform: translateY(-5px); border-color: #FFD700; box-shadow: 0 30px 80px rgba(0,0,0,0.95), 0 0 40px rgba(255,215,0,0.2); }
   .price-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, var(--gold-300), #F77F00, var(--gold-300)); background-size: 200% 200%; animation: gradientShift 3s ease infinite; border-radius: 24px 24px 0 0; }
   @keyframes gradientShift { 0% {background-position:0% 50%;} 50% {background-position:100% 50%;} 100% {background-position:0% 50%;} }
-  .price-display { font-family: var(--font-display); font-size: 3.2rem; font-weight: 900; background: linear-gradient(135deg, #FFD700, #F77F00); -webkit-background-clip: text; -webkit-text-fill-color: transparent; line-height: 1; margin-bottom: 0.5rem; }
+  .price-display { font-family: var(--font-display); font-size: clamp(2rem, 10vw, 3.2rem); font-weight: 900; background: linear-gradient(135deg, #FFD700, #F77F00); -webkit-background-clip: text; -webkit-text-fill-color: transparent; line-height: 1; margin-bottom: 0.5rem; word-break: keep-all; white-space: nowrap; }
   .price-unit { font-size: 1rem; color: var(--gray-500); }
   .incl-list { list-style: none; padding: 0; margin: 1.5rem 0; display: flex; flex-direction: column; gap: 0.8rem; }
   .incl-item { display: flex; align-items: center; gap: 0.75rem; font-size: 0.9rem; color: var(--gray-300); }

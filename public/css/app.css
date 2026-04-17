@@ -1074,7 +1074,13 @@ tr:hover td { background: rgba(255,255,255,0.02); }
   .hero-title { font-size: clamp(2rem, 8vw, 3.5rem); }
   .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
   .categories-grid { grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); }
-  .services-grid { grid-template-columns: 1fr; }
+  .services-grid { grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .service-card-media { height: 160px; }
+  .service-card-title { font-size: 0.9rem; line-height: 1.2; margin-bottom: 0.5rem; }
+  .service-price { font-size: 0.95rem; }
+  .service-card-body { padding: 0.8rem; }
+  .service-card-provider { flex-direction: column; align-items: flex-start; gap: 0.3rem; margin-bottom: 0.5rem; }
+  .service-card-footer { flex-direction: column; align-items: flex-start; gap: 0.3rem; padding-top: 0.5rem; }
   .providers-grid { grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); }
   .kpi-grid { grid-template-columns: 1fr 1fr; }
   .section-container { padding: 0 1rem; }

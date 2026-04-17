@@ -361,8 +361,17 @@ $emoji = $heure < 6 ? '🌙' : ($heure < 12 ? '☀️' : ($heure < 18 ? '🌤️
 .db-reveal-r { animation:dbFadeRight 0.7s 0.2s ease both; }
 @keyframes dbFadeUp    { from{opacity:0;transform:translateY(30px)} to{opacity:1;transform:none} }
 @keyframes dbFadeRight { from{opacity:0;transform:translateX(30px)} to{opacity:1;transform:none} }
-@media(max-width:1100px){ .db-kpi-grid{grid-template-columns:repeat(2,1fr);} .db-main-grid{grid-template-columns:1fr;} }
-@media(max-width:640px) { .db-kpi-grid{grid-template-columns:1fr 1fr;} .db-hero{flex-direction:column;} .db-reco-grid{grid-template-columns:1fr;} }
+@media(max-width:1100px){ .db-kpi-grid{grid-template-columns:repeat(2,1fr);} .db-main-grid{display:flex; flex-direction:column-reverse; gap:1.75rem;} }
+@media(max-width:640px) { 
+  .db-kpi-grid{grid-template-columns:1fr 1fr; gap: 0.75rem;} 
+  .db-hero{flex-direction:column;} 
+  .db-reco-grid{grid-template-columns:1fr;} 
+  .db-kpi-card { padding: 1rem; flex-direction: column; text-align: center; gap: 0.25rem; }
+  .db-kpi-icon { width: 38px; height: 38px; font-size: 1rem; }
+  .db-kpi-val { font-size: 1.4rem; }
+  .db-kpi-lbl { font-size: 0.62rem; line-height: 1.2; word-break: break-word; }
+  .db-hero-title { font-size: 2rem; }
+}
 </style>
 
 @endsection

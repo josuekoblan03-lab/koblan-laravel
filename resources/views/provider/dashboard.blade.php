@@ -6,7 +6,7 @@
 @php
 $user = Auth::user();
 $initials = $user->getInitials();
-$isValidated = $user->is_validated ?? false;
+$isValidated = $user->is_verified ?? false;
 @endphp
 
 <div style="position:relative;z-index:2;padding:1.5rem;display:flex;flex-direction:column;gap:1.75rem;">

@@ -89,14 +89,18 @@ Route::middleware(['auth', 'role:client'])->prefix('client')->name('client.')->g
 
 // Prestataire
 Route::middleware(['auth', 'role:prestataire'])->prefix('prestataire')->name('prestataire.')->group(function () {
+    // Accessible without verification
     Route::get('/dashboard', [Provider\DashboardController::class, 'index'])->name('dashboard');
-    Route::resource('/services', Provider\ServiceController::class);
-    Route::get('/orders', [Provider\OrderController::class, 'index'])->name('orders.index');
-    Route::put('/orders/{order}/status', [Provider\OrderController::class, 'updateStatus'])->name('orders.status');
     Route::get('/profile', [Provider\ProfileController::class, 'edit'])->name('profile');
     Route::put('/profile', [Provider\ProfileController::class, 'update'])->name('profile.update');
-    
     Route::get('/messages', [\App\Http\Controllers\MessageController::class, 'index'])->name('messages');
+
+    // ONLY accessible if verified
+    Route::middleware('verified.provider')->group(function () {
+        Route::resource('/services', Provider\ServiceController::class);
+        Route::get('/orders', [Provider\OrderController::class, 'index'])->name('orders.index');
+        Route::put('/orders/{order}/status', [Provider\OrderController::class, 'updateStatus'])->name('orders.status');
+    });
 });
 
 // Admin

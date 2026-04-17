@@ -6,8 +6,13 @@
      ============================================================ -->
 <section class="hero" id="hero-section">
   <canvas id="hero-canvas" style="position:absolute;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none;"></canvas>
-  <canvas id="character-canvas" style="position:absolute;top:0;right:0;width:50%;height:100vh;z-index:2;pointer-events:none;display:block;"></canvas>
+  <canvas id="character-canvas" class="hero-character-3d" style="position:absolute;top:0;right:0;width:50%;height:100vh;z-index:2;pointer-events:none;display:block;"></canvas>
   <div style="position:absolute;inset:0;background:radial-gradient(circle at 30% 50%, rgba(255,215,0,0.06) 0%, transparent 60%);z-index:1;pointer-events:none;"></div>
+  <style>
+    @media (max-width: 900px) {
+      .hero-character-3d { display: none !important; }
+    }
+  </style>
 
   <div class="section-container" style="position:relative;z-index:3;width:100%;">
     <div class="hero-content">

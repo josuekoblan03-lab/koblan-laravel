@@ -180,8 +180,8 @@
       @endauth
 
       @guest
-        <a href="{{ route('login') }}" class="btn btn-outline-gold btn-sm">Connexion</a>
-        <a href="{{ route('register') }}" class="btn btn-gold btn-sm">S'inscrire <i class="fas fa-arrow-right"></i></a>
+        <a href="{{ route('login') }}" class="btn btn-outline-gold btn-sm hide-on-mobile">Connexion</a>
+        <a href="{{ route('register') }}" class="btn btn-gold btn-sm hide-on-mobile">S'inscrire <i class="fas fa-arrow-right"></i></a>
       @endguest
 
       <button class="menu-toggle" id="menuToggle" aria-label="Menu">
@@ -207,6 +207,14 @@
     });
 </script>
 @endauth
+
+<style>
+  @media (max-width: 900px) {
+    .hide-on-mobile {
+      display: none !important;
+    }
+  }
+</style>
 
 <!-- FLASH MESSAGE -->
 @if(session()->has('success') || session()->has('error') || session()->has('warning'))

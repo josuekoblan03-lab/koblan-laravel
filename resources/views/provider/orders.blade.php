@@ -52,7 +52,7 @@
               'cancelled' => ['#ef4444', 'Annulée / Refusée', 'fa-times-circle']
           ];
           $st = $statusColors[$c->status] ?? $statusColors['pending'];
-          $p = $c->prestations->first();
+          $p = $c->prestation;
           $p_title = $p ? $p->title : 'Service personnalisé';
       @endphp
       <div class="order-card gs-item" style="--delay: {{ $idx * 0.1 }}s">
@@ -70,7 +70,7 @@
              </div>
              <div class="client-details">
                 <h3>{{ $c->client->name }}</h3>
-                <span><i class="fas fa-map-marker-alt"></i> {{ $c->neighborhood->name ?? 'Non spécifié' }}</span>
+                <span><i class="fas fa-map-marker-alt"></i> {{ $c->client->neighborhood->name ?? 'Non spécifié' }}</span>
                 @if($c->client->phone)
                    <span><i class="fas fa-phone-alt"></i> {{ $c->client->phone }}</span>
                 @endif

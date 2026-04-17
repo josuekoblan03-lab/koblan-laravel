@@ -13,12 +13,10 @@ class OrderController extends Controller
     {
         $user = Auth::user();
 
-        $orders = Order::whereHas('prestations', function($q) use ($user) {
+        $orders = Order::whereHas('prestation', function($q) use ($user) {
                 $q->where('user_id', $user->id);
             })
-            ->with(['client', 'neighborhood', 'prestations' => function($q) use ($user) {
-                $q->where('user_id', $user->id);
-            }])
+            ->with(['client', 'prestation'])
             ->latest()
             ->paginate(15);
 
@@ -30,7 +28,8 @@ class OrderController extends Controller
         $user = Auth::user();
         
         // Ensure this provider actually has a prestation in this order
-        $hasPrestation = $order->prestations()->where('user_id', $user->id)->exists();
+        // The order belongs to a prestation, and the prestation belongs to the user
+        $hasPrestation = $order->prestation && $order->prestation->user_id === $user->id;
         if (!$hasPrestation) {
             abort(403);
         }

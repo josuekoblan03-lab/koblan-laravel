@@ -57,6 +57,15 @@
       .dash-sidebar.open { transform: translateX(0); }
       .dash-main { margin-left: 0; width: 100%; max-width: 100%; }
     }
+    @media (max-width: 768px) {
+      .dash-topbar { padding: 0.75rem 1rem; flex-wrap: wrap; }
+      .dash-page-title { font-size: 1.2rem; }
+      .dash-topbar-search { display: none !important; }
+      .dash-btn-home span { display: none; }
+      .dash-btn-home { padding: 0.5rem !important; border-radius: 10px !important; width: 36px; height: 36px; justify-content: center; }
+      .dash-btn-home i { margin: 0 !important; font-size: 1rem !important; }
+      .dash-topbar-right { gap: 0.5rem !important; }
+    }
   </style>
 </head>
 <body>
@@ -218,9 +227,9 @@
           <div class="dash-page-title">{{ $title ?? 'Dashboard' }}</div>
         </div>
 
-        <div style="display:flex;align-items:center;gap:1rem;">
+        <div class="dash-topbar-right" style="display:flex;align-items:center;gap:1rem;">
           <!-- Recherche rapide -->
-          <div style="display:flex;align-items:center;gap:0.5rem;background:rgba(255,255,255,0.04);border:1px solid var(--glass-border);border-radius:9999px;padding:0.4rem 1rem;">
+          <div class="dash-topbar-search" style="display:flex;align-items:center;gap:0.5rem;background:rgba(255,255,255,0.04);border:1px solid var(--glass-border);border-radius:9999px;padding:0.4rem 1rem;">
             <i class="fas fa-search" style="color:var(--gray-500);font-size:0.8rem;"></i>
             <input type="text" placeholder="Rechercher..." style="background:none;border:none;outline:none;color:var(--gray-100);font-size:0.8rem;width:150px;"
                    onkeypress="if(event.key==='Enter')window.location.href='{{ route('services.index') }}?q='+encodeURIComponent(this.value)">
@@ -238,8 +247,8 @@
           </div>
 
           <!-- Go Home -->
-          <a href="{{ route('home') }}" class="btn btn-gold" style="border-radius:9999px; padding:0.4rem 1.2rem; font-size:0.85rem; font-weight:700; display:flex; align-items:center; gap:0.5rem; box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);">
-            <i class="fas fa-home" style="font-size:0.9rem;"></i> ACCUEIL
+          <a href="{{ route('home') }}" class="btn btn-gold dash-btn-home" style="border-radius:9999px; padding:0.4rem 1.2rem; font-size:0.85rem; font-weight:700; display:flex; align-items:center; gap:0.5rem; box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);">
+            <i class="fas fa-home" style="font-size:0.9rem;"></i> <span>ACCUEIL</span>
           </a>
         </div>
       </div>

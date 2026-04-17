@@ -8,8 +8,9 @@ use App\Http\Controllers\ServiceController;
 // ROUTE TEMPORAIRE POUR SEEDER LA BASE EN PRODUCTION
 Route::get('/seed-production-db-secret-123', function() {
     try {
-        Artisan::call('db:seed', ['--force' => true]);
-        return "SUCCESS! La base de donnees a ete remplie de services et profils. Allez vite me dire que c'est bon pour que je supprime cette route !";
+        Artisan::call('db:seed', ['--class' => 'ExtraServiceSeeder', '--force' => true]);
+        Artisan::call('db:seed', ['--class' => 'TestUsersSeeder', '--force' => true]);
+        return "SUCCESS! Les 6 autres services et les utilisateurs de test ont ete ajoutes avec succes !";
     } catch (\Exception $e) {
         return "ERREUR : " . $e->getMessage();
     }

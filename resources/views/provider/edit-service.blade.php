@@ -24,16 +24,17 @@
       <div class="form-group" style="margin-bottom:1.5rem;">
         <label style="display:block;font-size:0.85rem;color:var(--gray-400);margin-bottom:0.5rem;">Catégorie & Service Cible <span style="color:#ef4444;">*</span></label>
         <select name="service_type_id" class="form-control" required style="background:rgba(0,0,0,0.3);">
-          @php $currentCat = ''; @endphp
+          @php $currentCat = null; @endphp
           @foreach($services as $s)
-            @if($s->category->name !== $currentCat)
-              @if($currentCat !== '') </optgroup> @endif
-              <optgroup label="{{ $s->category->name }}">
-              @php $currentCat = $s->category->name; @endphp
+            @php $currentCatName = $s->category ? $s->category->name : 'Sans Catégorie'; @endphp
+            @if($currentCatName !== $currentCat)
+              @if($currentCat !== null) </optgroup> @endif
+              <optgroup label="{{ $currentCatName }}">
+              @php $currentCat = $currentCatName; @endphp
             @endif
             <option value="{{ $s->id }}" {{ (old('service_type_id', $prest->service_type_id) == $s->id) ? 'selected' : '' }}>{{ $s->name }}</option>
           @endforeach
-          </optgroup>
+          @if($currentCat !== null) </optgroup> @endif
         </select>
       </div>
 

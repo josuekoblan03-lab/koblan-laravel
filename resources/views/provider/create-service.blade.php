@@ -31,18 +31,19 @@
       <label style="display:block;font-size:0.85rem;color:#ccc;font-weight:600;margin-bottom:0.5rem;text-transform:uppercase;letter-spacing:0.05em;">Service *</label>
       <select name="service_type_id" style="width:100%;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:0.85rem 1rem;color:#fff;font-size:0.95rem;outline:none;transition:all 0.3s;appearance:none;cursor:pointer;" required onfocus="this.style.borderColor='#FFD700'" onblur="this.style.borderColor='rgba(255,255,255,0.1)'">
         <option value="" style="background:#111;">-- Choisir un service --</option>
-        @php $lastCat = ''; @endphp
+        @php $lastCat = null; @endphp
         @foreach($services as $s)
-          @if($s->category->name !== $lastCat)
-            @if($lastCat !== '') </optgroup> @endif
-            <optgroup label="{{ $s->category->name }}" style="background:#1a1a24;color:#FFD700;">
-            @php $lastCat = $s->category->name; @endphp
+          @php $currentCatName = $s->category ? $s->category->name : 'Sans Catégorie'; @endphp
+          @if($currentCatName !== $lastCat)
+            @if($lastCat !== null) </optgroup> @endif
+            <optgroup label="{{ $currentCatName }}" style="background:#1a1a24;color:#FFD700;">
+            @php $lastCat = $currentCatName; @endphp
           @endif
           <option value="{{ $s->id }}" style="background:#0a0a0f;color:#fff;" {{ old('service_type_id') == $s->id ? 'selected' : '' }}>
             {{ $s->name }}
           </option>
         @endforeach
-        @if($lastCat !== '') </optgroup> @endif
+        @if($lastCat !== null) </optgroup> @endif
       </select>
     </div>
 

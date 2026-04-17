@@ -173,8 +173,8 @@ $isValidated = $user->is_verified ?? false;
               <td style="padding:0.85rem 0;font-weight:600;color:#f0f0f0;white-space:nowrap;">{{ \Str::limit($p->title, 30) }}</td>
               <td style="padding:0.85rem 0;color:#FFD700;font-weight:700;white-space:nowrap;">{{ number_format($p->price, 0, ',', ' ') }} FCFA</td>
               <td style="padding:0.85rem 0;">
-                <span style="padding:0.2rem 0.6rem;border-radius:10px;font-size:0.72rem;font-weight:700;{{ $p->is_active ? 'background:rgba(34,197,94,0.15);color:#22C55E;' : 'background:rgba(239,68,68,0.1);color:#EF4444;' }}">
-                  {{ $p->is_active ? 'En ligne' : 'Masqué' }}
+                <span style="padding:0.2rem 0.6rem;border-radius:10px;font-size:0.72rem;font-weight:700;{{ $p->status === 'active' ? 'background:rgba(34,197,94,0.15);color:#22C55E;' : 'background:rgba(239,68,68,0.1);color:#EF4444;' }}">
+                  {{ $p->status === 'active' ? 'En ligne' : 'Inactif' }}
                 </span>
               </td>
               <td style="padding:0.85rem 0;text-align:right;">

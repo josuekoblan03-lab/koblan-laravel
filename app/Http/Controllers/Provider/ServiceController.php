@@ -44,7 +44,7 @@ class ServiceController extends Controller
 
         $prestation = tap(new Prestation($request->only('title', 'description', 'price', 'service_type_id')), function($p) {
             $p->user_id = Auth::id();
-            $p->is_active = 0; // Requires admin approval based on legacy logic
+            $p->status = 'pending'; // Requires admin approval
             $p->save();
         });
 

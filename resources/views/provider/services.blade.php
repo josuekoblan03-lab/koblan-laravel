@@ -5,8 +5,8 @@
 @section('content')
 @php
 $user = Auth::user();
-$actives = $prestations->filter(fn($p) => $p->is_active == 1);
-$inactives = $prestations->filter(fn($p) => $p->is_active == 0);
+$actives = $prestations->filter(fn($p) => $p->status === 'active');
+$inactives = $prestations->filter(fn($p) => $p->status !== 'active');
 $total_views = $prestations->sum('views_count') ?? 0; // Utiliser la vraie colonne des vues si disponible
 
 // Préparer données graphe par prestation
@@ -151,7 +151,7 @@ $titlesData = $prestations->map(fn($p) => \Str::limit($p->title, 18))->values()-
             </div>
           @endif
           <div class="svc-body">
-            <div class="svc-cat"><i class="{{ $p->serviceType->category->icon ?? 'fas fa-cogs' }}"></i> {{ $p->serviceType->category->name ?? 'Catégorie' }}</div>
+            <div class="svc-cat"><i class="{{ $p->serviceType?->category?->icon ?? 'fas fa-cogs' }}"></i> {{ $p->serviceType?->category?->name ?? 'Catégorie' }}</div>
             <div class="svc-title">{{ $p->title }}</div>
             <div class="svc-meta">
               <span class="svc-price">{{ number_format($p->price, 0, ',', ' ') }} FCFA</span>
@@ -196,7 +196,7 @@ $titlesData = $prestations->map(fn($p) => \Str::limit($p->title, 18))->values()-
           <span style="font-size:.75rem;color:#444;">Suspendue</span>
         </div>
         <div class="svc-body">
-          <div class="svc-cat"><i class="{{ $p->serviceType->category->icon ?? 'fas fa-cogs' }}"></i> {{ $p->serviceType->category->name ?? 'Catégorie' }}</div>
+          <div class="svc-cat"><i class="{{ $p->serviceType?->category?->icon ?? 'fas fa-cogs' }}"></i> {{ $p->serviceType?->category?->name ?? 'Catégorie' }}</div>
           <div class="svc-title">{{ $p->title }}</div>
           <div class="svc-meta">
             <span class="svc-price">{{ number_format($p->price, 0, ',', ' ') }} FCFA</span>

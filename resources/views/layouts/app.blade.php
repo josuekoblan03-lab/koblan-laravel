@@ -105,25 +105,25 @@
         @endphp
 
         <!-- Icon: Favoris -->
-        <a href="{{ $favPage }}" class="navbar-icon-btn" title="Mes Favoris" style="position:relative;background:none;border:none;display:flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:50%;color:var(--gray-300);text-decoration:none;transition:all 0.3s;">
+        <a href="{{ $favPage }}" class="navbar-icon-btn hide-on-mobile" title="Mes Favoris" style="position:relative;background:none;border:none;display:flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:50%;color:var(--gray-300);text-decoration:none;transition:all 0.3s;">
           <i class="fas fa-heart" style="font-size:1.1rem;"></i>
           <span id="badge-fav" style="position:absolute;top:-4px;right:-4px;background:#ef4444;color:#fff;border-radius:50%;width:18px;height:18px;font-size:0.65rem;font-weight:700;display:{{ $favCount > 0 ? 'flex' : 'none' }};align-items:center;justify-content:center;transform: scale({{ $favCount > 0 ? 1 : 0.5 }});transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);">{{ $favCount }}</span>
         </a>
 
         <!-- Icon: Messages -->
-        <a href="{{ $msgPage }}" class="navbar-icon-btn" title="Messages" style="position:relative;background:none;border:none;display:flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:50%;color:var(--gray-300);text-decoration:none;transition:all 0.3s;">
+        <a href="{{ $msgPage }}" class="navbar-icon-btn hide-on-mobile" title="Messages" style="position:relative;background:none;border:none;display:flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:50%;color:var(--gray-300);text-decoration:none;transition:all 0.3s;">
           <i class="fas fa-comment-dots" style="font-size:1.1rem;"></i>
           <span id="badge-msg" style="position:absolute;top:-4px;right:-4px;background:var(--gold-300);color:#000;border-radius:50%;width:18px;height:18px;font-size:0.65rem;font-weight:700;display:{{ $msgCount > 0 ? 'flex' : 'none' }};align-items:center;justify-content:center;transform: scale({{ $msgCount > 0 ? 1 : 0.5 }});transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);">{{ $msgCount }}</span>
         </a>
 
         <!-- Icon: Commandes -->
-        <a href="{{ $ordersPage }}" class="navbar-icon-btn" title="Mes Commandes" style="position:relative;background:none;border:none;display:flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:50%;color:var(--gray-300);text-decoration:none;transition:all 0.3s;">
+        <a href="{{ $ordersPage }}" class="navbar-icon-btn hide-on-mobile" title="Mes Commandes" style="position:relative;background:none;border:none;display:flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:50%;color:var(--gray-300);text-decoration:none;transition:all 0.3s;">
           <i class="fas fa-shopping-bag" style="font-size:1.1rem;"></i>
           <span id="badge-cmd" style="position:absolute;top:-4px;right:-4px;background:#10b981;color:#fff;border-radius:50%;width:18px;height:18px;font-size:0.65rem;font-weight:700;display:{{ $cmdCount > 0 ? 'flex' : 'none' }};align-items:center;justify-content:center;transform: scale({{ $cmdCount > 0 ? 1 : 0.5 }});transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);">{{ $cmdCount }}</span>
         </a>
 
         <!-- Notification Bell -->
-        <div class="dropdown" style="position:relative;">
+        <div class="dropdown hide-on-mobile" style="position:relative;">
           <a href="{{ url('/notifications') }}" style="background:none;border:none;color:var(--gray-400);font-size:1rem;position:relative;padding:0.5rem;width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;text-decoration:none;" title="Notifications" class="navbar-icon-btn">
             <i class="fas fa-bell"></i>
             <span id="badge-notif" style="position:absolute;top:-2px;right:-2px;background:#3b82f6;color:#fff;border-radius:50%;width:18px;height:18px;font-size:0.65rem;font-weight:700;display:{{ $globalNotif > 0 ? 'flex' : 'none' }};align-items:center;justify-content:center;transform: scale({{ $globalNotif > 0 ? 1 : 0.5 }});transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);">{{ $globalNotif }}</span>

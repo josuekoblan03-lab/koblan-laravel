@@ -31,10 +31,23 @@
   </div>
 </section>
 
-<div class="section-container" style="display:flex;gap:2rem;padding-top:3rem;padding-bottom:3rem;align-items:flex-start;">
+<style>
+  .services-layout {
+    display: flex; gap: 2rem; padding-top: 3rem; padding-bottom: 3rem; align-items: flex-start;
+  }
+  .services-sidebar {
+    width: 280px; flex-shrink: 0; position: sticky; top: 90px;
+  }
+  @media (max-width: 900px) {
+    .services-layout { flex-direction: column; }
+    .services-sidebar { width: 100%; position: static; }
+  }
+</style>
+
+<div class="section-container services-layout">
   
   <!-- 3. SIDEBAR FILTRES AVANCÉS -->
-  <aside style="width:280px;flex-shrink:0;position:sticky;top:90px;" class="reveal-left">
+  <aside class="services-sidebar reveal-left">
     <div class="glass-card" style="padding:1.5rem;">
       <h3 style="font-weight:700;margin-bottom:1.5rem;display:flex;align-items:center;gap:0.5rem;"><i class="fas fa-sliders-h text-gold-plain"></i> Filtres</h3>
       

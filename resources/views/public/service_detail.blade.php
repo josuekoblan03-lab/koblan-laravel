@@ -210,7 +210,7 @@ $totalSlides = $medias->count() > 0 ? $medias->count() : 1;
           @foreach($allMedias as $idx => $m)
           <div class="carousel-slide {{ $idx === 0 ? 'active' : '' }}" data-index="{{ $idx }}">
             @if(is_object($m))
-              <img src="{{ asset('storage/'.$m->url) }}" alt="{{ $p->title }} - photo {{ $idx+1 }}" onclick="openLightbox('{{ asset('storage/'.$m->url) }}')" style="cursor:zoom-in;" loading="{{ $idx === 0 ? 'eager' : 'lazy' }}">
+              <img src="{{ $m->getDisplayUrl() }}" alt="{{ $p->title }} - photo {{ $idx+1 }}" onclick="openLightbox('{{ $m->getDisplayUrl() }}')" style="cursor:zoom-in;" loading="{{ $idx === 0 ? 'eager' : 'lazy' }}">
             @else
               <img src="{{ $m['url'] }}" alt="{{ $p->title }}" onclick="openLightbox('{{ $m['url'] }}')" style="cursor:zoom-in;">
             @endif
@@ -244,7 +244,7 @@ $totalSlides = $medias->count() > 0 ? $medias->count() : 1;
         @foreach($allMedias as $idx => $m)
         <div class="carousel-thumb {{ $idx === 0 ? 'active' : '' }}" onclick="goToSlide({{ $idx }})" data-thumb="{{ $idx }}">
           @if(is_object($m))
-            <img src="{{ asset('storage/'.$m->url) }}" alt="Miniature {{ $idx+1 }}" loading="lazy">
+            <img src="{{ $m->getDisplayUrl() }}" alt="Miniature {{ $idx+1 }}" loading="lazy">
           @else
             <img src="{{ $m['url'] }}" alt="Miniature {{ $idx+1 }}" loading="lazy">
           @endif

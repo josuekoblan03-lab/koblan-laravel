@@ -59,7 +59,7 @@
         <div style="display:flex;gap:10px;flex-wrap:wrap;">
           @foreach($medias as $m)
           <div style="position:relative;width:100px;height:100px;border-radius:8px;overflow:hidden;border:1px solid rgba(255,255,255,0.1);">
-            <img src="{{ asset('storage/'.$m->media_url) }}" style="width:100%;height:100%;object-fit:cover;">
+            <img src="{{ $m->getDisplayUrl() }}" style="width:100%;height:100%;object-fit:cover;">
             @if($m->is_main)
             <div style="position:absolute;bottom:0;left:0;right:0;background:rgba(255,215,0,0.8);color:#000;font-size:0.6rem;text-align:center;font-weight:bold;padding:2px;">Principal</div>
             @endif

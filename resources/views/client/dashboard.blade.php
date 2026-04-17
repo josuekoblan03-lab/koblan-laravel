@@ -160,7 +160,7 @@ $emoji = $heure < 6 ? '🌙' : ($heure < 12 ? '☀️' : ($heure < 18 ? '🌤️
           <a href="{{ route('services.show', $r->id) }}" class="db-reco-card">
             <div class="db-reco-img">
               @if($r->mainMedia)
-                <img src="{{ asset('storage/'.$r->mainMedia->media_url) }}" alt="{{ $r->title }}">
+                <img src="{{ $r->getImageUrl() }}" alt="{{ $r->title }}">
               @else
                 <div class="db-reco-placeholder"><i class="fas fa-star"></i></div>
               @endif
@@ -228,7 +228,7 @@ $emoji = $heure < 6 ? '🌙' : ($heure < 12 ? '☀️' : ($heure < 18 ? '🌤️
           <a href="{{ route('services.show', $f->id) }}" class="db-fav-item">
             <div class="db-fav-thumb">
               @if($f->mainMedia)
-                <img src="{{ asset('storage/'.$f->mainMedia->media_url) }}" alt="">
+                <img src="{{ $f->getImageUrl() }}" alt="">
               @else
                 <i class="fas fa-briefcase"></i>
               @endif

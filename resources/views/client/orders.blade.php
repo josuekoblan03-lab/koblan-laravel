@@ -83,7 +83,7 @@
               <!-- Image -->
               <div class="order-image">
                 @if($prestation && $prestation->mainMedia)
-                  <img src="{{ asset('storage/'.$prestation->mainMedia->media_url) }}" alt="Prestation">
+                  <img src="{{ $prestation->getImageUrl() }}" alt="Prestation">
                 @else
                   <div style="width:100%;height:100%;background:rgba(255,255,255,0.05);display:flex;align-items:center;justify-content:center;">
                     <i class="fas fa-box" style="font-size:2rem;color:#555;"></i>

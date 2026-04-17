@@ -139,7 +139,7 @@ $titlesData = $prestations->map(fn($p) => \Str::limit($p->title, 18))->values()-
         @foreach($actives as $p)
         <div class="svc-card">
           @if($p->mainMedia)
-            <img src="{{ asset('storage/'.$p->mainMedia->media_url) }}" class="svc-img" alt="{{ $p->title }}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+            <img src="{{ $p->getImageUrl() }}" class="svc-img" alt="{{ $p->title }}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
             <div class="svc-img-ph" style="display:none;">
               <i class="fas fa-image" style="font-size:2.5rem;color:rgba(255,215,0,0.2);"></i>
               <span style="font-size:.75rem;color:#555;">Image indisponible</span>

@@ -7,19 +7,11 @@ use Illuminate\Http\Request;
 use App\Models\Prestation;
 use App\Models\ServiceType;
 use App\Models\Media;
-use App\Services\CloudinaryService;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class ServiceController extends Controller
 {
-    protected CloudinaryService $cloudinary;
-
-    public function __construct(CloudinaryService $cloudinary)
-    {
-        $this->cloudinary = $cloudinary;
-    }
-
     public function index()
     {
         $user = Auth::user();
@@ -36,18 +28,18 @@ class ServiceController extends Controller
         $services = ServiceType::with('category')->get()->sortBy(function($s) {
             return ($s->category ? $s->category->name : 'Sans Catégorie') . '-' . $s->name;
         });
-        
+
         return view('provider.create-service', compact('services'));
     }
 
     public function store(Request $request)
     {
         $request->validate([
-            'title'        => 'required|string|max:255',
-            'description'  => 'nullable|string',
-            'price'        => 'required|numeric|min:0',
+            'title'           => 'required|string|max:255',
+            'description'     => 'nullable|string',
+            'price'           => 'required|numeric|min:0',
             'service_type_id' => 'required|exists:service_types,id',
-            'medias.*'     => 'nullable|file|mimes:jpeg,png,jpg,gif,mp4|max:10240'
+            'medias.*'        => 'nullable|file|mimes:jpeg,png,jpg,gif,webp,mp4|max:10240'
         ]);
 
         $data = $request->only('title', 'price', 'service_type_id');
@@ -63,22 +55,24 @@ class ServiceController extends Controller
             foreach ($request->file('medias') as $index => $file) {
                 if (!$file->isValid()) continue;
 
-                $isImage = str_starts_with($file->getMimeType(), 'image/');
-                $url     = null;
+                $isImage   = str_starts_with($file->getMimeType(), 'image/');
+                $mimeType  = $file->getMimeType();
+                $imageData = null;
 
-                // Essaye Cloudinary d'abord (stockage permanent)
-                if ($this->cloudinary->isConfigured()) {
-                    $url = $this->cloudinary->upload($file, 'koblan/services');
-                }
-
-                // Fallback: stockage local Laravel
-                if (!$url) {
-                    $url = $file->store('services', 'public');
+                if ($isImage) {
+                    // Stocker l'image en base64 directement en BDD
+                    $rawData   = file_get_contents($file->getRealPath());
+                    $imageData = 'data:' . $mimeType . ';base64,' . base64_encode($rawData);
+                    $urlPath   = ''; // pas de fichier physique
+                } else {
+                    // Pour les vidéos: stockage local (acceptable, plus rare)
+                    $urlPath = $file->store('services', 'public');
                 }
 
                 Media::create([
                     'prestation_id' => $prestation->id,
-                    'url'           => $url,
+                    'url'           => $urlPath,
+                    'image_data'    => $imageData,
                     'type'          => $isImage ? 'image' : 'video',
                     'is_main'       => $index === 0,
                     'order'         => $index,
@@ -87,7 +81,7 @@ class ServiceController extends Controller
         }
 
         return redirect()->route('prestataire.services.index')
-            ->with('success', 'Prestation publiée avec succès ! En attente de validation admin.');
+            ->with('success', '🎉 Prestation publiée ! En attente de validation par l\'administrateur.');
     }
 
     public function edit(Prestation $service)
@@ -126,20 +120,22 @@ class ServiceController extends Controller
             foreach ($request->file('medias') as $index => $file) {
                 if (!$file->isValid()) continue;
 
-                $isImage = str_starts_with($file->getMimeType(), 'image/');
-                $url     = null;
+                $isImage   = str_starts_with($file->getMimeType(), 'image/');
+                $mimeType  = $file->getMimeType();
+                $imageData = null;
+                $urlPath   = '';
 
-                if ($this->cloudinary->isConfigured()) {
-                    $url = $this->cloudinary->upload($file, 'koblan/services');
-                }
-
-                if (!$url) {
-                    $url = $file->store('services', 'public');
+                if ($isImage) {
+                    $rawData   = file_get_contents($file->getRealPath());
+                    $imageData = 'data:' . $mimeType . ';base64,' . base64_encode($rawData);
+                } else {
+                    $urlPath = $file->store('services', 'public');
                 }
 
                 Media::create([
                     'prestation_id' => $service->id,
-                    'url'           => $url,
+                    'url'           => $urlPath,
+                    'image_data'    => $imageData,
                     'type'          => $isImage ? 'image' : 'video',
                     'is_main'       => false,
                     'order'         => $maxOrder + $index + 1,
@@ -156,8 +152,7 @@ class ServiceController extends Controller
         if ($service->user_id !== Auth::id()) abort(403);
 
         foreach ($service->medias as $media) {
-            // Ne supprime le fichier local que si c'est un chemin relatif (pas une URL Cloudinary)
-            if (!str_starts_with($media->url, 'http')) {
+            if ($media->url && !str_starts_with($media->url, 'http')) {
                 Storage::disk('public')->delete($media->url);
             }
             $media->delete();

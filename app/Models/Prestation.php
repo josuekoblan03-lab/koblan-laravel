@@ -72,28 +72,23 @@ class Prestation extends Model
      */
     public function getImageUrl(): string
     {
-        // 1. Image uploadée directement
+        // 1. Image uploadée directement (champ image de la prestation)
         if ($this->image) {
-            // URL externe (Cloudinary etc.)
-            if (str_starts_with($this->image, 'http')) {
+            if (str_starts_with($this->image, 'http') || str_starts_with($this->image, 'data:')) {
                 return $this->image;
             }
-            // Fichier local — vérifie qu'il existe encore
             if (\Illuminate\Support\Facades\Storage::disk('public')->exists($this->image)) {
                 return asset('storage/' . $this->image);
             }
         }
 
-        // 2. Media principal
+        // 2. Media principal — image stockée en base de données (base64) ou fichier
         $main = $this->mainMedia;
-        if ($main && $main->url) {
-            // URL externe (Cloudinary etc.)
-            if (str_starts_with($main->url, 'http')) {
-                return $main->url;
-            }
-            // Fichier local — vérifie qu'il existe encore
-            if (\Illuminate\Support\Facades\Storage::disk('public')->exists($main->url)) {
-                return asset('storage/' . $main->url);
+        if ($main) {
+            $displayUrl = $main->getDisplayUrl();
+            // Ne retourner que si ce n'est pas l'image par défaut
+            if (!str_ends_with($displayUrl, 'default-service.jpg')) {
+                return $displayUrl;
             }
         }
 

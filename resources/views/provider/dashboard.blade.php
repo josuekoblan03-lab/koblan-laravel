@@ -157,6 +157,7 @@ $isValidated = $user->is_verified ?? false;
         <a href="{{ route('prestataire.services.index') }}" style="font-size:0.85rem;color:#FFD700;text-decoration:none;">Gérer <i class="fas fa-cog"></i></a>
       </div>
       @if($services->isNotEmpty())
+        <div class="table-responsive">
         <table style="width:100%;border-collapse:collapse;font-size:0.85rem;">
           <thead>
             <tr style="border-bottom:1px solid rgba(255,255,255,0.06);color:#555;text-align:left;">
@@ -169,8 +170,8 @@ $isValidated = $user->is_verified ?? false;
           <tbody>
             @foreach($services->take(4) as $p)
             <tr style="border-bottom:1px solid rgba(255,255,255,0.025);">
-              <td style="padding:0.85rem 0;font-weight:600;color:#f0f0f0;">{{ \Str::limit($p->title, 30) }}</td>
-              <td style="padding:0.85rem 0;color:#FFD700;font-weight:700;">{{ number_format($p->price, 0, ',', ' ') }} FCFA</td>
+              <td style="padding:0.85rem 0;font-weight:600;color:#f0f0f0;white-space:nowrap;">{{ \Str::limit($p->title, 30) }}</td>
+              <td style="padding:0.85rem 0;color:#FFD700;font-weight:700;white-space:nowrap;">{{ number_format($p->price, 0, ',', ' ') }} FCFA</td>
               <td style="padding:0.85rem 0;">
                 <span style="padding:0.2rem 0.6rem;border-radius:10px;font-size:0.72rem;font-weight:700;{{ $p->is_active ? 'background:rgba(34,197,94,0.15);color:#22C55E;' : 'background:rgba(239,68,68,0.1);color:#EF4444;' }}">
                   {{ $p->is_active ? 'En ligne' : 'Masqué' }}
@@ -183,6 +184,7 @@ $isValidated = $user->is_verified ?? false;
             @endforeach
           </tbody>
         </table>
+        </div>
       @else
         <p style="text-align:center;color:#555;">Aucun service. <a href="{{ route('prestataire.services.create') }}" style="color:#FFD700;">Créer un service</a></p>
       @endif
@@ -286,8 +288,14 @@ $isValidated = $user->is_verified ?? false;
   div[style*="grid-template-columns:repeat(4,1fr)"] { grid-template-columns:repeat(2,1fr) !important; }
   div[style*="grid-template-columns:1fr 380px"] { grid-template-columns:1fr !important; }
 }
-@media(max-width:640px){
+@media(max-width:768px){
   div[style*="grid-template-columns:repeat(2,1fr)"] { grid-template-columns:1fr 1fr !important; }
+  .table-responsive { display: block; width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+}
+@media(max-width:480px){
+  div[style*="grid-template-columns:1fr 1fr"] { grid-template-columns:1fr !important; }
+  div[style*="padding:2.5rem"] { padding: 1.5rem !important; } /* shrink hero padding */
+  div[style*="padding:1.5rem"] { padding: 1rem !important; } /* shrink card padding */
 }
 </style>
 

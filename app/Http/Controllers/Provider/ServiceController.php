@@ -26,7 +26,7 @@ class ServiceController extends Controller
     public function create()
     {
         $services = ServiceType::with('category')->get()->sortBy(function($s) {
-            return $s->category->name . '-' . $s->name;
+            return ($s->category ? $s->category->name : 'Sans Catégorie') . '-' . $s->name;
         });
         
         return view('provider.create-service', compact('services'));
@@ -75,7 +75,7 @@ class ServiceController extends Controller
         }
 
         $services = ServiceType::with('category')->get()->sortBy(function($s) {
-            return $s->category->name . '-' . $s->name;
+            return ($s->category ? $s->category->name : 'Sans Catégorie') . '-' . $s->name;
         });
 
         $service->load('medias');

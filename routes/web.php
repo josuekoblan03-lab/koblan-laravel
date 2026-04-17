@@ -113,6 +113,11 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::put('/providers/{provider}/validate', [Admin\ProviderController::class, 'validateProvider'])->name('providers.validate');
     Route::put('/providers/{provider}/reject', [Admin\ProviderController::class, 'rejectProvider'])->name('providers.reject');
     Route::get('/statistics', [Admin\StatisticsController::class, 'index'])->name('statistics');
+
+    // Validation des prestations soumises par les prestataires
+    Route::get('/prestations', [Admin\PrestationController::class, 'index'])->name('prestations.index');
+    Route::put('/prestations/{prestation}/approve', [Admin\PrestationController::class, 'approve'])->name('prestations.approve');
+    Route::put('/prestations/{prestation}/reject', [Admin\PrestationController::class, 'reject'])->name('prestations.reject');
 });
 
 // API Internes (Communes)

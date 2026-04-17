@@ -106,8 +106,15 @@
           <a href="{{ route('admin.providers.index') }}" class="{{ request()->routeIs('admin.providers.*') ? 'active' : '' }}">
             <div class="nav-icon"><i class="fas fa-user-check"></i></div> Prestataires
           </a>
+          <a href="{{ route('admin.prestations.index') }}" class="{{ request()->routeIs('admin.prestations.*') ? 'active' : '' }}">
+            <div class="nav-icon"><i class="fas fa-clipboard-check"></i></div> Valider Prestations
+            @php $pendingCount = \App\Models\Prestation::where('status','pending')->count(); @endphp
+            @if($pendingCount > 0)
+              <span style="margin-left:auto;background:#F59E0B;color:#000;border-radius:99px;padding:0.1rem 0.5rem;font-size:0.68rem;font-weight:700;">{{ $pendingCount }}</span>
+            @endif
+          </a>
           <a href="{{ route('admin.services.index') }}" class="{{ request()->routeIs('admin.services.*') ? 'active' : '' }}">
-            <div class="nav-icon"><i class="fas fa-briefcase"></i></div> Prestations
+            <div class="nav-icon"><i class="fas fa-briefcase"></i></div> Types de services
           </a>
           <a href="{{ route('admin.categories.index') }}" class="{{ request()->routeIs('admin.categories.*') ? 'active' : '' }}">
             <div class="nav-icon"><i class="fas fa-tags"></i></div> Catégories
